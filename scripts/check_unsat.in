@@ -6,6 +6,12 @@ for i in cerbotor bitwuzla; do
     [ ! -x "${!i}" ] && echo "$(basename "$0"): missing executable $i (${!i})" >&2 && exit 1
 done
 [ $# -lt 2 ] && echo "usage: $(basename "$0") <model> <safe witness>" && exit 0
+SEQUENTIAL=0
+if [[ ${1:-} = "--seq" ]]; then
+    SEQUENTIAL=1
+    shift
+fi
+
 mkdir -p ${TMPDIR:-/tmp}/froleyks-cerbotor
 if [ $# -gt 2 ]; then
     TMP=$(realpath "$bin"/..)
@@ -26,19 +32,38 @@ echo $(basename "$0"): witness "$2"
     exit 1
 }
 
-ALL_SUCCESS=true
-for check in "${CHECKS[@]}"; do
-    echo Checking $check
-    r=$($bitwuzla "${TMP}/$check.btor2")
+smt() {
+    echo Checking $1
+    r="$($bitwuzla "${TMP}/$1.btor2")" || {
+        echo "$(basename "$0"): Error: bitwuzla encountered a problem when checking $1 $r" >&2
+        return 1
+    }
     if [[ ! "$r" =~ Bad\ property\ .*unsatisfiable\. ]]; then
-        ALL_SUCCESS=false
         echo $(basename "$0"): "Error: $check check failed" "$r"
+        return 1
     fi
-done
-if $ALL_SUCCESS; then
-    echo $(basename "$0"): Certificate check passed.
-    exit 0
+    return 0
+}
+
+if [ "$SEQUENTIAL" -eq 1 ]; then
+    for name in "${CHECKS[@]}"; do
+        smt "$name" || {
+            echo "$(basename "$0"): Certificate check failed."
+            exit 1
+        }
+    done
 else
-    echo $(basename "$0"): Certificate check failed.
-    exit 1
+    PIDS=()
+    for name in "${CHECKS[@]}"; do
+        (smt "$name") &
+        PIDS+=($!)
+    done
+    for pid in "${PIDS[@]}"; do
+        if ! wait "$pid"; then
+            echo "$(basename "$0"): Certificate check failed."
+            exit 1
+        fi
+    done
 fi
+
+echo "$(basename "$0"): Certificate check passed."
