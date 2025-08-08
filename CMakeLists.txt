@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.5)
-project(cerbotor VERSION 1.0.4)
+cmake_minimum_required(VERSION 3.19)
+project(cerbotor VERSION 1.1.0)
 set(CMAKE_CXX_STANDARD 23)
 file(GLOB headers CONFIGURE_DEPENDS src/*.hpp)
 file(GLOB sources CONFIGURE_DEPENDS src/*.cpp)
@@ -14,14 +14,15 @@ target_compile_options(cerbotor PRIVATE -DGITID="${GIT_ID}")
 target_compile_options(cerbotor PRIVATE -DVERSION="${PROJECT_VERSION}")
 include(dep/btor2tools/btor2parser_lib.cmake)
 target_link_libraries(cerbotor btor2parser)
+install(TARGETS cerbotor)
 
 if(TOOLS)
   include(dep/fuzzbtor2/fuzzbtor2_bin.cmake)
   include(dep/bitwuzla/bitwuzla_bin.cmake)
   set(BUILD_TOOLS ON)
   add_scripts(
-    check_unsafe
-    check_safe
+    check_sat
+    check_unsat
     check
     certified
     generate

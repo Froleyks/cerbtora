@@ -11,5 +11,3 @@ set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build as shared library")
 FetchContent_MakeAvailable(btor2tools)
 get_target_property(btor2parser_include_dirs btor2parser INCLUDE_DIRECTORIES)
 target_include_directories(btor2parser PUBLIC ${btor2parser_include_dirs}/btor2parser)
-
-set_target_properties(btorsplit catbtor PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1)
