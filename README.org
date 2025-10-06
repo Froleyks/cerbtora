@@ -1,6 +1,6 @@
-* Cerbotor
+* Cerbtora
 #+html: <img src="logo.png" width="300px" align="right"/>
-[[https://github.com/Froleyks/cerbotor][Cerbotor]] checks the correctness of witnesses in the [[https://github.com/hwmcc/btor2tools][Btor2]] format.
+[[https://github.com/Froleyks/cerbotor][Cerbtora]] checks the correctness of witnesses in the [[https://github.com/hwmcc/btor2tools][Btor2]] format.
 
 ** Quickstart
 #+begin_src sh
@@ -22,7 +22,7 @@ A witness circuit generalizes the concept of an inductive invariant.
 
 Instead of searching for an inductive invariant in the model itself, we find a different circuit -- the witness -- that simulates part of the model and has an inductive invariant.
 ** Witness circuits
-To check if a witness circuit is valid for a given model, Cerbotor performs five checks:
+To check if a witness circuit is valid for a given model, Cerbtora performs five checks:
 | Reset      | R{K} \wedge C \Rightarrow R'{K} \wedge C'              |
 | Transition | F{K} \wedge C0 \wedge C1 \wedge C0' \Rightarrow F'{K} \wedge C1' |
 | Property   | (C \wedge C') \Rightarrow (P \Rightarrow P')                |
@@ -49,7 +49,7 @@ Other information may be stored, but for elements of $K$ the /name/ must start w
 5 next 1 3 3
 6 bad 3
 #+end_example
-If no mapping information is found, Cerbotor assumes that
+If no mapping information is found, Cerbtora assumes that
 the first $n$ inputs in the model are simulated by the first $n$ inputs in the witness, and the first $m$ states by the first $m$ states in the witness.
 Checkout the [[https://github.com/Froleyks/cerbotor/blob/main/examples][examples]] directory.
 ** References
@@ -60,10 +60,10 @@ Beyond that, we demonstrate how to certify the combination of different preproce
 | Towards Compositional Hardware Model Checking Certification | Yu, Froleyks & Biere et al. | FMCAD23 |
 | Certifying Phase Abstraction                                | Froleyks, Yu & Biere et al. | IJCAR24 |
 ** Build
-Cerbotor itself depends on make, cmake, a c++ compiler, and git to fetch the btor2tools dependency.
+Cerbtora itself depends on make, cmake, a c++ compiler, and git to fetch the btor2tools dependency.
 With cmake -DTOOLS=ON additional tools are built, namely fuzzbtor2 and the bitvector SMT solver bitwuzla. The latter brings the additional dependencies of meson and m4.
 
-A static Cerbotor binary can be built with cmake -DSTATIC=ON.
+A static Cerbtora binary can be built with cmake -DSTATIC=ON.
 
 Checkout the Dockerfile for more details or directly run the container:
 
@@ -72,8 +72,8 @@ docker build -t cerbotor .
 docker run --rm cerbotor examples/model.btor2 examples/witness.btor2
 #+end_src
 ** Scripts
-In addition to Cerbotor, the TOOLS option builds a number of useful scripts in the build/bin directory:
-- check <model> <witness> :: checks the first line of the witness to decide if it is a Btor2 model to certify safety or a Btor2 trace to certify unsafety. Then runs Cerbotor and bitwuzla or btorsim respectively.
+In addition to Cerbtora, the TOOLS option builds a number of useful scripts in the build/bin directory:
+- check <model> <witness> :: checks the first line of the witness to decide if it is a Btor2 model to certify safety or a Btor2 trace to certify unsafety. Then runs Cerbtora and bitwuzla or btorsim respectively.
 - generate [seed] :: Produces a random Btor2 model. Ensures that it is compatible with the current version of btor2sim.
 - certified <model checker> <model> :: Runs the model checker and checks the produced certificate. The model checker is expected to take the first argument as the model path and write a (sat or unsat) certificate to the path provided in the second argument.
 - fuzzer <model checker> [threads] :: Executes the model checker on random Btor2 models in multiple threads and checks the produced certificates. Error inducing models are collected in build/bugs.
