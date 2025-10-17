@@ -4,14 +4,11 @@
 
 ** Quickstart
 #+begin_src sh
-git clone https://github.com/Froleyks/cerbtora
-cd cerbtora
-cmake -DCMAKE_BUILD_TYPE=Release -DTOOLS=ON -B build
-make -j$(nproc) -C build
-./build/bin/check examples/model.btor2 examples/witness.btor2
-
-#expected usage: ./<your_model_checker> <model> <witness>
-./build/bin/fuzzer ./<your_model_checker>
+  git clone https://github.com/Froleyks/cerbtora
+  cd cerbtora
+  make
+  # make container # use podman (recommended for simple testing)
+  ./bin/check examples/model.btor2 examples/witness.btor2
 #+end_src
 ** Motivation
 Model checking is an essential technique for hardware design.
@@ -61,15 +58,14 @@ Beyond that, we demonstrate how to certify the combination of different preproce
 | Certifying Phase Abstraction                                | Froleyks, Yu & Biere et al. | IJCAR24 |
 ** Build
 Cerbtora itself depends on make, cmake, a c++ compiler, and git to fetch the btor2tools dependency.
-With cmake -DTOOLS=ON additional tools are built, namely fuzzbtor2 and the bitvector SMT solver bitwuzla. The latter brings the additional dependencies of meson and m4.
+With cmake -DTOOLS=ON additional tools are built, namely fuzzbtor2 and the bitvector SMT solver bitwuzla. The latter brings the additional dependencies of meson, m4 and gmp.
 
 A static Cerbtora binary can be built with cmake -DSTATIC=ON.
 
-Checkout the Dockerfile for more details or directly run the container:
+Checkout the Dockerfile for more details or build the static binaries in there with:
 
 #+begin_src sh
-docker build -t cerbtora .
-docker run --rm cerbtora examples/model.btor2 examples/witness.btor2
+make container
 #+end_src
 ** Scripts
 In addition to Cerbtora, the TOOLS option builds a number of useful scripts in the build/bin directory:
