@@ -1,21 +1,12 @@
-FROM alpine:3.21
+FROM debian:trixie-slim
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      bash ca-certificates git \
+      build-essential cmake meson ninja-build \
+      pkg-config m4 libgmp-dev
 
-RUN apk update && \
-    apk add --no-cache \
-        bash \
-        build-base \
-        cmake \
-        git \
-        meson \
-        m4 \
-        ca-certificates \
-        coreutils
+WORKDIR /cerbtora
+COPY . .
+RUN make
 
-COPY . /cerbotor
-WORKDIR /cerbotor
-RUN \
-  rm -rf build && \
-  cmake -DCMAKE_BUILD_TYPE=Release -DTOOLS=ON -B build && \
-  make -j$(nproc) -C build
-
-ENTRYPOINT ["/cerbotor/build/bin/check"]

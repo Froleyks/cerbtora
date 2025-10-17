@@ -9,13 +9,13 @@ Btor2::Btor2(const char *path) {
   parser = btor2parser_new();
   FILE *circuit_file = fopen(path, "r");
   if (!circuit_file) {
-    std::cerr << "Cerbotor: Error: failed to open circuit." << std::endl;
+    std::cerr << "Cerbtora: Error: failed to open circuit." << std::endl;
     btor2parser_delete(parser);
     exit(1);
   }
   if (!btor2parser_read_lines(parser, circuit_file)) {
 
-    std::cerr << "Cerbotor: Error: failed to parse circuit." << std::endl;
+    std::cerr << "Cerbtora: Error: failed to parse circuit." << std::endl;
     fclose(circuit_file);
     btor2parser_delete(parser);
     exit(1);

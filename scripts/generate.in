@@ -7,8 +7,8 @@ for i in fuzzbtor2 btorsim; do
 done
 [ $# -lt 0 ] && echo "usage: $(basename "$0") [<seed>]" && exit 0
 
-mkdir -p ${TMPDIR:-/tmp}/froleyks-cerbotor
-TMP=$(mktemp -d "${TMPDIR:-/tmp}"/froleyks-cerbotor/"$(basename "$0")"-XXXXXXXX)
+mkdir -p ${TMPDIR:-/tmp}/froleyks-cerbtora
+TMP=$(mktemp -d "${TMPDIR:-/tmp}"/froleyks-cerbtora/"$(basename "$0")"-XXXXXXXX)
 trap 'rm -rf ${TMP}; exit' EXIT HUP INT QUIT TERM
 mod="$TMP"/mod.btor2
 

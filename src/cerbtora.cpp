@@ -9,7 +9,7 @@
 #define MSG \
   if (0) std::cout
 #else
-#define MSG std::cout << "Cerbotor: "
+#define MSG std::cout << "Cerbtora: "
 #endif
 
 std::ofstream Encoding::file;

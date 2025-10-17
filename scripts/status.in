@@ -2,7 +2,7 @@
 
 while true; do
     s=(0 0 0 0 0)
-    logs=$(find "${TMPDIR:-/tmp}"/froleyks-cerbotor/fuzz-* -name log 2>/dev/null)
+    logs=$(find "${TMPDIR:-/tmp}"/froleyks-cerbtora/fuzz-* -name log 2>/dev/null)
     for l in $logs; do
         fuzzed=($(grep '^fuzzed:' "$l" | tail -n 1))
         for i in {0..4}; do

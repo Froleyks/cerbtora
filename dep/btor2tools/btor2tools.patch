@@ -1,5 +1,20 @@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 325e534..3e5e8fc 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -27,10 +27,8 @@ if (BUILD_TOOLS)
+ 
+   add_executable(catbtor catbtor.c)
+   target_link_libraries(catbtor btor2parser)
+-  install(TARGETS catbtor DESTINATION ${CMAKE_INSTALL_BINDIR})
+ 
+   add_executable(btorsplit btorsplit.cpp)
+-  install(TARGETS btorsplit DESTINATION ${CMAKE_INSTALL_BINDIR})
+ endif()
+ 
+ if(BUILD_BTOR2AIGER)
 diff --git a/src/btor2parser/btor2parser.c b/src/btor2parser/btor2parser.c
-index 153f289..d7b1b00 100644
+index 153f289..02abe16 100644
 --- a/src/btor2parser/btor2parser.c
 +++ b/src/btor2parser/btor2parser.c
 @@ -28,6 +28,8 @@ struct Btor2Parser

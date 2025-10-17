@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 bin="$(cd -- "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd -P)"
-cerbotor="$bin/cerbotor"
+cerbtora="$bin/cerbtora"
 bitwuzla="$bin/bitwuzla"
-for i in cerbotor bitwuzla; do
+for i in cerbtora bitwuzla; do
     [ ! -x "${!i}" ] && echo "$(basename "$0"): missing executable $i (${!i})" >&2 && exit 1
 done
 [ $# -lt 2 ] && echo "usage: $(basename "$0") <model> <safe witness>" && exit 0
@@ -12,11 +12,11 @@ if [[ ${1:-} = "--seq" ]]; then
     shift
 fi
 
-mkdir -p ${TMPDIR:-/tmp}/froleyks-cerbotor
+mkdir -p ${TMPDIR:-/tmp}/froleyks-cerbtora
 if [ $# -gt 2 ]; then
     TMP=$(realpath "$bin"/..)
 else
-    TMP=$(mktemp -d "${TMPDIR:-/tmp}"/froleyks-cerbotor/$(basename "$0")-XXXXXXXX)
+    TMP=$(mktemp -d "${TMPDIR:-/tmp}"/froleyks-cerbtora/$(basename "$0")-XXXXXXXX)
     trap 'rm -rf ${TMP}; exit' EXIT HUP INT QUIT TERM
 fi
 echo $(basename "$0"): using temp dir "$TMP"
@@ -27,8 +27,8 @@ for check in "${CHECKS[@]}"; do
 done
 echo $(basename "$0"): model   "$1"
 echo $(basename "$0"): witness "$2"
-"$cerbotor" "$1" "$2" "${btors[@]}" || {
-    echo "$(basename "$0"): Error: cerbotor failed" >&2
+"$cerbtora" "$1" "$2" "${btors[@]}" || {
+    echo "$(basename "$0"): Error: cerbtora failed" >&2
     exit 1
 }
 

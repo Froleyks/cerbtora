@@ -1,11 +1,11 @@
 * Cerbtora
 #+html: <img src="logo.png" width="300px" align="right"/>
-[[https://github.com/Froleyks/cerbotor][Cerbtora]] checks the correctness of witnesses in the [[https://github.com/hwmcc/btor2tools][Btor2]] format.
+[[https://github.com/Froleyks/cerbtora][Cerbtora]] checks the correctness of witnesses in the [[https://github.com/hwmcc/btor2tools][Btor2]] format.
 
 ** Quickstart
 #+begin_src sh
-git clone https://github.com/Froleyks/cerbotor
-cd cerbotor
+git clone https://github.com/Froleyks/cerbtora
+cd cerbtora
 cmake -DCMAKE_BUILD_TYPE=Release -DTOOLS=ON -B build
 make -j$(nproc) -C build
 ./build/bin/check examples/model.btor2 examples/witness.btor2
@@ -51,7 +51,7 @@ Other information may be stored, but for elements of $K$ the /name/ must start w
 #+end_example
 If no mapping information is found, Cerbtora assumes that
 the first $n$ inputs in the model are simulated by the first $n$ inputs in the witness, and the first $m$ states by the first $m$ states in the witness.
-Checkout the [[https://github.com/Froleyks/cerbotor/blob/main/examples][examples]] directory.
+Checkout the [[https://github.com/Froleyks/cerbtora/blob/main/examples][examples]] directory.
 ** References
 The theory this tool is based on is detailed in our papers.
 Beyond that, we demonstrate how to certify the combination of different preprocessing techniques and model checking algorithms with witness circuits.
@@ -68,8 +68,8 @@ A static Cerbtora binary can be built with cmake -DSTATIC=ON.
 Checkout the Dockerfile for more details or directly run the container:
 
 #+begin_src sh
-docker build -t cerbotor .
-docker run --rm cerbotor examples/model.btor2 examples/witness.btor2
+docker build -t cerbtora .
+docker run --rm cerbtora examples/model.btor2 examples/witness.btor2
 #+end_src
 ** Scripts
 In addition to Cerbtora, the TOOLS option builds a number of useful scripts in the build/bin directory:
