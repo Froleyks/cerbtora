@@ -1,12 +1,17 @@
-FROM debian:trixie-slim
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-      bash ca-certificates git \
-      build-essential cmake meson ninja-build \
-      pkg-config m4 libgmp-dev
+FROM alpine:3.22 AS builder
+RUN apk add --no-cache \
+      bash coreutils \
+      build-base cmake \
+      meson ninja \
+      pkgconf m4 gmp-dev \
+      git ca-certificates
 
-WORKDIR /cerbtora
+WORKDIR /work
 COPY . .
+RUN rm -rf build bin
 RUN make
 
+from alpine:3.22
+RUN apk add --no-cache bash
+COPY --from=builder /work/bin/* /usr/local/bin
+ENTRYPOINT ["check"]
